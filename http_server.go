@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -12,7 +13,7 @@ import (
 	"github.com/go-echarts/go-echarts/v2/types"
 )
 
-func TestHandler(dataPath string) http.HandlerFunc {
+func DataHandler(dataPath string) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 
 		var observations Observations
@@ -85,4 +86,8 @@ func TestHandler(dataPath string) http.HandlerFunc {
 			SetSeriesOptions(charts.WithLineChartOpts(opts.LineChart{Smooth: true}))
 		line.Render(w)
 	}
+}
+
+func alive(w http.ResponseWriter, req *http.Request) {
+	fmt.Fprintf(w, "Alive\n")
 }

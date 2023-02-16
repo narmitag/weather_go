@@ -13,7 +13,8 @@ func main() {
 
 	if *httpPtr {
 		println("Listening for data on :8081")
-		http.HandleFunc("/", TestHandler(*dataPath))
+		http.HandleFunc("/", DataHandler(*dataPath))
+		http.HandleFunc("/health", alive)
 		http.ListenAndServe(":8081", nil)
 	} else {
 		ExtractData(*dataPath)
