@@ -43,6 +43,7 @@ func TestHandler(dataPath string) http.HandlerFunc {
 						if err != nil {
 							return err
 						}
+						//println(path)
 						if filepath.Ext(path) == ".json" {
 
 							observations = process_file(path)

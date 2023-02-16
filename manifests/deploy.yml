@@ -1,0 +1,68 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: weather
+spec:
+  selector:
+    matchLabels:
+      app: weather
+  template:
+    metadata:
+      labels:
+        app: weather
+    spec:
+      serviceAccountName: default
+      terminationGracePeriodSeconds: 5
+      securityContext:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        runAsUser: 1000
+      containers:
+      - name: weather
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - all
+          privileged: false
+          readOnlyRootFilesystem: true
+        image: docker.io/narmitag/weather:latest
+        ports:
+        - containerPort: 8081
+        # readinessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 8081
+        #     httpHeaders:
+        #     - name: Custom-Header
+        #       value: Awesome
+        # livenessProbe:
+        #   httpGet:
+        #     path: /
+        #     port: 8081
+        #     httpHeaders:
+        #     - name: Custom-Header
+        #       value: Awesome
+        resources:
+          requests:
+            cpu: 100m
+            memory: 64Mi
+          limits:
+            cpu: 200m
+            memory: 128Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: weather
+spec:
+  type: NodePort
+  selector:
+    app: weather
+  ports:
+    - protocol: TCP
+      port: 8081
+      targetPort: 8081
+      nodePort: 30000
