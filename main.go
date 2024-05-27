@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"net/http"
-	"os"
 )
 
 func main() {
@@ -12,7 +11,8 @@ func main() {
 
 	flag.Parse()
 
-	httpPort := os.Getenv("PORT")
+	// httpPort := os.Getenv("PORT")
+	httpPort := "8081"
 
 	if *httpPtr {
 		println("Listening for data on :" + httpPort)

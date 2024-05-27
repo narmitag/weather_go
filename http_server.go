@@ -27,7 +27,7 @@ func DataHandler(dataPath string) http.HandlerFunc {
 		high_line := make([]opts.LineData, 0)
 		var xaxis []string
 
-		years := []int{2019, 2020, 2021, 2022}
+		years := []int{2019, 2020, 2021, 2022, 2023}
 		months := []string{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}
 
 		for _, year := range years {
